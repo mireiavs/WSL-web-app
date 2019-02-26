@@ -1,0 +1,53 @@
+<template>
+    <v-bottom-nav
+      :value="true"
+      color="#0a030f"
+      fixed
+      app
+    >
+      <v-btn
+        color="##26A93D"
+        flat
+        to="/">
+        <span>Home</span>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+
+      <v-btn
+        color="##26A93D"
+        flat
+        to="/about"
+      >
+        <span>About</span>
+        <v-icon>mdi-information</v-icon>
+      </v-btn>
+
+      <v-btn
+        color="##26A93D"
+        flat
+        to="/contact"
+      >
+        <span>Contact</span>
+        <v-icon>mdi-email</v-icon>
+      </v-btn>
+
+      <v-btn
+        color="##26A93D"
+        flat
+        to="/chat"
+      >
+        <span>Chat</span>
+        <v-icon>mdi-forum</v-icon>
+      </v-btn>
+    </v-bottom-nav>
+</template>
+
+<script>
+    export default {
+        
+    }
+</script>
+
+<style scoped>
+
+</style>

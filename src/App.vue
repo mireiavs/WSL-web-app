@@ -1,31 +1,54 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app dark>
+    <headercomp></headercomp>
+    <v-content class="content">
+      <v-btn flat @click="$router.go(-1)" class="backbutton">
+        <v-icon large>mdi-chevron-left</v-icon> 
+      </v-btn>
+      <h3 class="title">{{title}}</h3>
+      <router-view></router-view>
+    </v-content>
+    <navcomp></navcomp>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<script>
+import Navcomp from "./components/Navcomp.vue";
+import Headercomp from "./components/Headercomp.vue";
+
+export default {
+  components: {
+    Navcomp,
+    Headercomp
+  },
+  computed: {
+    title() {
+      return this.$route.name;
+    }
+  }
+};
+</script>
+
+
+<style scoped>
+.title {
   text-align: center;
-  color: #2c3e50;
+  margin: 20px 0 20px 0;
+  color: white;
+  position: relative;
 }
-#nav {
-  padding: 30px;
+.content {
+  background-image: url("./assets/bckg.jpg");
+  background-color: #260b38;
+  background-size: 100%;
+  background-position: bottom;
+  background-attachment: fixed;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.pagetitle {
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+.backbutton {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  }
 </style>

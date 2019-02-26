@@ -1,0 +1,252 @@
+{
+  "teams": [{
+      "id": "Arsenal",
+      "fullname": "Arsenal WFC",
+      "image": "@/assets/team-logos/Arsenal.png",
+      "nickname": "The Gunners",
+      "about": "Arsenal Women Football Club are the most successful club in English women's football having won 49 national honours to date. The club was founded in 1987 as Arsenal Ladies Football Club by the kit manager for the Arsenal men's team, who remained the club's manager until his retirement in 2009.",
+      "stadium": {
+        "name": "Meadow Park",
+        "town": "Borehamwood",
+        "capacity": 4502
+      },
+      "FA_WSL_wins": 2,
+      "table_position": 2,
+      "wins": 12,
+      "losses": 0,
+      "draws": 2,
+      "points": 36
+    },
+    {
+      "id": "Birmingham",
+      "fullname": "Birmingham City WFC",
+      "image": "@/assets/team-logos/Birmingham.png",
+      "nickname": "The Blues",
+      "about": "Birmingham City Women F.C. is one of the founding members of the FA Women's Super League. The club was formed in 1968 by a group of female fans who played local friendly matches until 1970.",
+      "stadium": {
+        "name": "Damson Park",
+        "town": "Solihull",
+        "capacity": 3050
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 4,
+      "wins": 9,
+      "losses": 1,
+      "draws": 5,
+      "points": 28
+    },
+    {
+      "id": "Brighton",
+      "fullname": "Brighton & Hove Albion WFC",
+      "image": "@/assets/team-logos/Brighton.png",
+      "nickname": "The Seagulls",
+      "about": "Brighton & Hove Albion Women & Girls Football Club was founded in 1991. In 2018 the club joined the FA Women's Super League.",
+      "stadium": {
+        "name": "Broadfield Stadium",
+        "town": "Crawley",
+        "capacity": 6134
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 9,
+      "wins": 3,
+      "losses": 3,
+      "draws": 10,
+      "points": 12
+    },
+    {
+      "id": "Bristol",
+      "fullname": "Bristol City WFC",
+      "image": "@/assets/team-logos/Bristol.png",
+      "nickname": "The Vixens",
+      "about": "Bristol City Women's Football Club was founded in 1998, following a merger between the Bristol Rovers girls' teams and Welsh side Cable-Tel L.F.C.",
+      "stadium": {
+        "name": "Stoke Gifford Stadium",
+        "town": "Filton",
+        "capacity": 1500
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 5,
+      "FA_WSL_wins": 0,
+      "table_position": 5,
+      "wins": 6,
+      "losses": 4,
+      "draws": 5,
+      "points": 22
+    },
+    {
+      "id": "Chelsea",
+      "fullname": "Chelsea FC Women",
+      "image": "@/assets/team-logos/Chelsea.png",
+      "nickname": "The Blues",
+      "about": "Chelsea Football Club Women, formerly known as Chelsea Ladies Football Club was formed in 1992 after supporters of Chelsea F.C. expressed demand for a women's side.",
+      "stadium": {
+        "name": "Kingsmeadow",
+        "town": "Kingston upon Thames",
+        "capacity": 4850
+      },
+      "FA_WSL_wins": 2,
+      "table_position": 3,
+      "wins": 9,
+      "losses": 5,
+      "draws": 2,
+      "points": 32
+    },
+    {
+      "id": "Everton",
+      "fullname": "Everton L.F.C.",
+      "image": "@/assets/team-logos/Everton.png",
+      "nickname": "The Toffees",
+      "about": "Everton Ladies Football Club started life as Hoylake WFC in 1983 and became known as Everton Ladies in 1995.",
+      "stadium": {
+        "name": "Haig Avenue",
+        "town": "Southport",
+        "capacity": 6008
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 10,
+      "wins": 1,
+      "losses": 3,
+      "draws": 9,
+      "points": 6
+    },
+    {
+      "id": "Liverpool",
+      "fullname": "Liverpool F.C. Women",
+      "image": "@/assets/team-logos/Liverpool.png",
+      "nickname": "The Reds",
+      "about": "Liverpool Football Club Women, formerly known as Liverpool Ladies Football Club was founded in 1989 as Newton LFC. In 1994 the club linked with Liverpool F.C. and took on its name.",
+      "stadium": {
+        "name": "Prenton Park",
+        "town": "Birkenhead",
+        "capacity": 16587
+      },
+      "FA_WSL_wins": 2,
+      "table_position": 8,
+      "wins": 5,
+      "losses": 1,
+      "draws": 8,
+      "points": 16
+    },
+    {
+      "id": "Manchester",
+      "fullname": "Manchester City W.F.C.",
+      "image": "@/assets/team-logos/Manchester.png",
+      "nickname": "The Citizens",
+      "about": "Manchester City Women's Football Club was formed in November 1988 as Manchester City Ladies F.C.",
+      "stadium": {
+        "name": "Academy Stadium",
+        "town": "Manchester",
+        "capacity": 7000
+      },
+      "FA_WSL_wins": 1,
+      "table_position": 1,
+      "wins": 11,
+      "losses": 5,
+      "draws": 0,
+      "points": 38
+    },
+    {
+      "id": "Reading",
+      "fullname": "Reading F.C. Women",
+      "image": "@/assets/team-logos/Reading.png",
+      "nickname": "The Royals",
+      "about": "Reading FC began an association with women's football when it affiliated with Reading Royals LFC (previously Twyford Comets) in 1988.",
+      "stadium": {
+        "name": "Adams Park",
+        "town": "High Wycombe",
+        "capacity": 9617
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 7,
+      "wins": 5,
+      "losses": 3,
+      "draws": 6,
+      "points": 18
+    },
+    {
+      "id": "WestHam",
+      "fullname": "West Ham United WFC",
+      "image": "@/assets/team-logos/Westham.png",
+      "nickname": "The Hammers",
+      "about": "West Ham United Women Football Club were formed in 1991.",
+      "stadium": {
+        "name": "Rush Green Stadium",
+        "town": "London",
+        "capacity": 4500
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 6,
+      "wins": 6,
+      "losses": 1,
+      "draws": 8,
+      "points": 19
+    },
+    {
+      "id": "Yeovil",
+      "fullname": "Yeovil Town LFC",
+      "image": "@/assets/team-logos/Yeovil.png",
+      "nickname": "The Glovers",
+      "about": "Yeovil Town Ladies Football Club was formed in 1990 as Yetminster Ladies.",
+      "stadium": {
+        "name": "The Avenue Stadium",
+        "town": "Dorchester",
+        "capacity": 9565
+      },
+      "FA_WSL_wins": 0,
+      "table_position": 11,
+      "wins": 1,
+      "losses": 0,
+      "draws": 13,
+      "points": 3
+    }
+  ],
+  "matches": [{
+      "match_id": 1,
+      "match_date": "20 Feb 2019",
+      "kick_off": "19:30",
+      "home_team": "Chelsea",
+      "away_team": "Bristol",
+      "home_score": 6,
+      "away_score": 0
+    },
+    {
+      "match_id": 2,
+      "match_date": "21 Feb 2019",
+      "kick_off": "19:00",
+      "home_team": "Manchester",
+      "away_team": "Everton",
+      "home_score": 3,
+      "away_score": 1
+    },
+
+    {
+      "match_id": 3,
+      "match_date": "23 Feb 2019",
+      "kick_off": "19:30",
+      "home_team": "Arsenal",
+      "away_team": "Yeovil",
+      "home_score": 3,
+      "away_score": 0
+    },
+
+    {
+      "match_id": 4,
+      "match_date": "20 Feb 2019",
+      "kick_off": "19:30",
+      "home_team": "Reading",
+      "away_team": "WestHam",
+      "home_score": 1,
+      "away_score": 2
+    },
+
+    {
+      "match_id": 5,
+      "match_date": "20 Feb 2019",
+      "kick_off": "19:45",
+      "home_team": "Brighton",
+      "away_team": "Birmingham",
+      "home_score": 2,
+      "away_score": 1
+    }
+  ]
+}
