@@ -1,19 +1,17 @@
 <template>
-  <v-container text-xs-center>
-    <v-layout column>
+  <v-card light class="contact">
+    
+    <div class="icons">
+      <p>Tap the envelope to send us an email:</p>
       <v-flex>
-        <p>You can contact us by email or phone using the buttons below:</p>
+        <a href="mailto:contact@wsl.com"><v-icon size="130px" center>mdi-email-outline</v-icon></a>
       </v-flex>
-      <div class="icons">
-        <v-flex>
-          <v-icon size="130px" center>mdi-email-outline</v-icon>
-        </v-flex>
-        <v-flex>
-          <v-icon size="130px" center>mdi-phone</v-icon>
-        </v-flex>
-      </div>
-    </v-layout>
-  </v-container>
+      <p>You can also call us by tapping the phone icon:</p>
+      <v-flex>
+        <a href="#"><v-icon size="130px" center>mdi-phone</v-icon></a>
+      </v-flex>
+    </div>
+  </v-card>
 </template>
 
 <script>
@@ -21,11 +19,22 @@ export default {};
 </script>
 
 <style scoped>
-p {
-  font-size: 1.2em;
-}
 .icons {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
+  align-items: center;
+  margin-top: 20px;
+}
+ .contact {
+  margin: 50px 20px 0 20px;
+  padding: 20px;
+  font-size: 1.1em;
+}
+.contact a {
+  text-decoration: none;
+}
+.contact p{
+  text-align: center;
+  font-size: 1.1em
 }
 </style>

@@ -8,7 +8,7 @@ import Matchlist from "./views/Matchlist.vue";
 import Matchinfo from "./views/Matchinfo.vue";
 import Table from "./views/Table.vue";
 import Teamlist from "./views/Teamlist.vue";
-import Teaminfo from "./views/Teaminfo.vue"
+import Teaminfo from "./views/Teaminfo.vue";
 
 Vue.use(Router);
 
@@ -37,7 +37,7 @@ export default new Router({
       component: Chat
     },
     {
-      path: "/match-list",
+      path: "/next-matchday",
       name: "Next Matchday",
       component: Matchlist
     },
@@ -60,6 +60,11 @@ export default new Router({
       path: "/team-list/:id",
       name: "Team information",
       component: Teaminfo
+    },
+    {
+      path: "/results",
+      name: "Results",
+      component: Matchlist
     }
   ]
 });
