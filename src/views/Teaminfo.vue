@@ -9,8 +9,8 @@
       </div>
       <p>{{ team.about }}</p>
       <div class="teaminfo-title">Upcoming matches</div>
-      <div class="upcoming-games" v-for="match in upcomingMatches" :key="match.id">
-        <div class="team-logos">
+      <router-link class="upcoming-games" v-for="match in upcomingMatches" :key="match.match_id" :to="{name: 'Match information', params: {id: match.match_id}}">
+        <div class="team-logos" >
           <div class="team">
             <img :src="require(`../assets/team-logos/${match.home_team}.png`)" height="60px">
             <p>{{ getTeamName(match.home_team) }}</p>
@@ -26,7 +26,7 @@
           <p>{{ match.kick_off }}</p>
         </div>
         <div class="divider" v-show="upcomingMatches.indexOf(match) !== upcomingMatches.length-1"></div>
-      </div>
+      </router-link>
 
       <div class="teaminfo-title">Table position</div>
       <div class="team-position">
@@ -137,6 +137,7 @@ export default {
   font-size: 1.3em;
   margin: 10px 0 20px 0;
   text-align: center;
+  margin-top: 20px;
 }
 .team-logos {
   display: flex;
@@ -160,8 +161,10 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.upcoming-games p {
+a.upcoming-games {
   margin-bottom: 0;
+  text-decoration: none;
+  color: black
 }
 .datetime p {
   margin-top: 0;

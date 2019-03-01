@@ -1,15 +1,18 @@
 <template>
   <div>
-    <div class="logos" >
+    <div class="logos">
       <router-link class="team" :to="{name: 'Team information', params: {id: homeTeam.id}}">
         <img :src="require(`../assets/team-logos/${homeTeam.id}.png`)">
-        <p>{{ homeTeam.fullname }}</p>
       </router-link>
       <div class="separator2">{{ separator }}</div>
       <router-link class="team" :to="{name: 'Team information', params: {id: awayTeam.id}}">
         <img :src="require(`../assets/team-logos/${awayTeam.id}.png`)">
-        <p>{{ awayTeam.fullname }}</p>
       </router-link>
+    </div>
+    <div class="team-names">
+      <p>{{ homeTeam.fullname }}</p>
+      <div class="separator2"></div>
+      <p>{{ awayTeam.fullname }}</p>
     </div>
     <v-container fluid grid-list-lg>
       <v-layout row wrap>
@@ -20,17 +23,50 @@
                 <div class="cardtitle">Date</div>
                 <div>{{ match.match_date }} at {{ match.kick_off }}</div>
               </div>
-              <div>
+              <div v-show="match.match_id > 5">
                 <div class="cardtitle">Location</div>
                 <span>{{ homeTeam.stadium.name }} in {{ homeTeam.stadium.town }}</span>
                 <iframe class="map" :src="homeTeam.stadium.map" frameborder="0" allowfullscreen></iframe>
               </div>
-<!--               <div>
-                <div class="cardtitle">Line-ups</div>
-                <div>
-
+              <div v-show="match.match_id <= 5">
+                <div class="cardtitle">Goal scorers</div>
+                <div class="lineups">
+                  <div class="lineup" v-show="match.home_score !== 0">
+                    <h4>{{ homeTeam.fullname }}</h4>
+                    <p v-for="(player, index) in getGoalScorers(homeTeam)" :key="index">
+                      <v-icon light>mdi-soccer</v-icon>
+                      {{ player }}
+                    </p>
+                  </div>
+                  <div class="lineup" v-show="match.away_score !== 0">
+                    <h4>{{ awayTeam.fullname }}</h4>
+                    <p v-for="(player, index) in getGoalScorers(awayTeam)" :key="index">
+                      <v-icon light>mdi-soccer</v-icon>
+                      {{ player }}
+                    </p>
+                  </div>
                 </div>
-              </div> -->
+              </div>
+
+              <div v-show="match.match_id <= 5">
+                <div class="cardtitle">Line-ups</div>
+                <div class="lineups">
+                  <div class="lineup">
+                    <h4>{{ homeTeam.fullname }}</h4>
+                    <p
+                      v-for="(player, index) in getRandomPlayers(homeTeam)"
+                      :key="index"
+                    >{{ player }}</p>
+                  </div>
+                  <div class="lineup">
+                    <h4>{{ awayTeam.fullname }}</h4>
+                    <p
+                      v-for="(player, index) in getRandomPlayers(awayTeam)"
+                      :key="index"
+                    >{{ player }}</p>
+                  </div>
+                </div>
+              </div>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -61,19 +97,40 @@ export default {
       return this.allTeams.find(team => team.id === awayTeamName);
     },
     separator() {
-      if(this.match.match_id > 5) {
-        return "-"
+      if (this.match.match_id > 5) {
+        return "-";
       } else {
-        return this.match.home_score + " - " + this.match.away_score
+        return this.match.home_score + " - " + this.match.away_score;
       }
     }
-  }
-/*   methods: {
+  },
+  methods: {
     getRandomPlayers(team) {
-      team.players
-
+      var lineup = [];
+      var allPlayers = team.players.slice();
+      for (var i = 0; i < 11; i++) {
+        var randomPlayer =
+          allPlayers[Math.floor(Math.random() * allPlayers.length)];
+        lineup.push(randomPlayer);
+        allPlayers.splice(allPlayers.indexOf(randomPlayer), 1);
+      }
+      return lineup;
+    },
+    getGoalScorers(team) {
+      var goalScorers = [];
+      if (team === this.homeTeam) {
+        var goals = this.match.home_score;
+      } else {
+        var goals = this.match.away_score;
+      }
+      for (var i = 0; i < goals; i++) {
+        var randomPlayer =
+          team.players[Math.floor(Math.random() * team.players.length)];
+        goalScorers.push(randomPlayer);
+      }
+      return goalScorers;
     }
-  } */
+  }
 };
 </script>
 
@@ -83,6 +140,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   width: inherit;
+  margin: 0 15px 0 15px
 }
 .team {
   display: flex;
@@ -91,21 +149,17 @@ export default {
   align-items: center;
   color: white;
   text-decoration: none;
-  flex-basis: 100%
+  flex-basis: 100%;
 }
 .team img {
   height: 90px;
   margin-bottom: 10px;
 }
-.team p {
-  text-align:center;
-  width: 80%;
-}
+
 .separator2 {
   min-width: 55px;
   text-align: center;
-  padding-bottom: 50px;
-  font-size: 2em
+  font-size: 2em;
 }
 .gameinfo {
   margin-left: 20px;
@@ -119,5 +173,26 @@ export default {
   width: 90%;
   height: 150px;
   border: 0;
+}
+.lineups {
+  display: flex;
+}
+.lineup {
+  flex-grow: 1;
+  flex-basis: 100%;
+}
+.lineup p {
+  margin-bottom: 0;
+}
+.team-names {
+  display: flex;
+  margin: 0 15px 0 15px;
+}
+.team-names p {
+  text-align: center;
+  width: 80%;
+}
+.team-names separator2 {
+  flex-grow: 1;
 }
 </style>

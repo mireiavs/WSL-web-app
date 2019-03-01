@@ -4,11 +4,11 @@
     <div class="icons">
       <p>Tap the envelope to send us an email:</p>
       <v-flex>
-        <a href="mailto:contact@wsl.com"><v-icon size="130px" center>mdi-email-outline</v-icon></a>
+        <a href="mailto:contact@wsl.com"><v-icon size="100px" center>mdi-email-outline</v-icon></a>
       </v-flex>
       <p>You can also call us by tapping the phone icon:</p>
       <v-flex>
-        <a href="#"><v-icon size="130px" center>mdi-phone</v-icon></a>
+        <a href="#"><v-icon size="100px" center>mdi-phone</v-icon></a>
       </v-flex>
     </div>
   </v-card>
@@ -35,6 +35,7 @@ export default {};
 }
 .contact p{
   text-align: center;
-  font-size: 1.1em
+  font-size: 1.1em;
+  margin-bottom: 0;
 }
 </style>

@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
-import Contact from "./views/Contact.vue";
 import Chat from "./views/Chat.vue";
 import Matchlist from "./views/Matchlist.vue";
 import Matchinfo from "./views/Matchinfo.vue";
@@ -25,11 +24,6 @@ export default new Router({
       path: "/about",
       name: "About",
       component: About
-    },
-    {
-      path: "/contact",
-      name: "Contact",
-      component: Contact
     },
     {
       path: "/chat",
