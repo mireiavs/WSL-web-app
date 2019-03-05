@@ -7,7 +7,10 @@
             <img :src="require(`../assets/team-logos/${match.home_team}.png`)" height="60px">
             <p>{{ homeTeamName }}</p>
           </div>
-          <div class="separator" v-show="this.$route.path.includes('results')">{{ match.home_score }} - {{ match.away_score }}</div>
+          <div
+            class="separator"
+            v-show="this.$route.path.includes('results')"
+          >{{ match.home_score }} - {{ match.away_score }}</div>
           <div class="separator" v-show="this.$route.path.includes('next-matchday')">-</div>
           <div class="logo-name">
             <img :src="require(`../assets/team-logos/${match.away_team}.png`)" height="60px">
@@ -36,9 +39,9 @@ export default {
       return this.$store.state.wsldata.teams.find(
         team => team.id === this.match.away_team
       ).fullname;
-    }
+    }    
   }
-};
+}
 </script>
 
 <style>

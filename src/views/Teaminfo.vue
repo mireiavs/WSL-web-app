@@ -9,8 +9,13 @@
       </div>
       <p>{{ team.about }}</p>
       <div class="teaminfo-title">Upcoming matches</div>
-      <router-link class="upcoming-games" v-for="match in upcomingMatches" :key="match.match_id" :to="{name: 'Match information', params: {id: match.match_id}}">
-        <div class="team-logos" >
+      <router-link
+        class="upcoming-games"
+        v-for="match in upcomingMatches"
+        :key="match.match_id"
+        :to="{name: 'Match information', params: {id: match.match_id}}"
+      >
+        <div class="team-logos">
           <div class="team">
             <img :src="require(`../assets/team-logos/${match.home_team}.png`)" height="60px">
             <p>{{ getTeamName(match.home_team) }}</p>
@@ -99,12 +104,10 @@ export default {
       var teamIndex = orderedTeams.indexOf(this.team);
       if (teamIndex === 0) {
         return orderedTeams.slice(0, 3);
-      }
-      else if (teamIndex === 1) {
-        return orderedTeams.slice(0, 4)
-      }
-      else {
-        return orderedTeams.slice(teamIndex - 2, teamIndex + 3)
+      } else if (teamIndex === 1) {
+        return orderedTeams.slice(0, 4);
+      } else {
+        return orderedTeams.slice(teamIndex - 2, teamIndex + 3);
       }
     }
   },
@@ -146,13 +149,14 @@ export default {
   width: inherit;
   align-content: center;
 }
-.separator2, .team {
+.separator2,
+.team {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
   flex-basis: 100%;
-  text-align: center
+  text-align: center;
 }
 .separator2 {
   padding-top: 20px;
@@ -164,7 +168,7 @@ export default {
 a.upcoming-games {
   margin-bottom: 0;
   text-decoration: none;
-  color: black
+  color: black;
 }
 .datetime p {
   margin-top: 0;
@@ -174,11 +178,11 @@ a.upcoming-games {
   font-weight: bold;
 }
 .divider {
-  border-bottom: solid #E0E0E0 1px;
+  border-bottom: solid #e0e0e0 1px;
   margin: 10px 0 10px 0;
 }
 .map {
   margin-top: 10px;
-  width: 100%
+  width: 100%;
 }
 </style>
