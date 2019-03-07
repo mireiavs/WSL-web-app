@@ -1,40 +1,56 @@
 <template>
-  <v-container fluid grid-list-lg>
-    <v-layout column>
-      <v-card class="teamcard" light v-for="team in teams" :key="team.id" :to="{name: 'Team information', params: {id: team.id}}">
+  <div>
+    <loader v-if="!this.$store.state.dataReady"></loader>
+    <v-container fluid grid-list-lg v-else>
+      <v-layout column>
+        <v-card
+          class="teamcard"
+          light
+          v-for="team in teams"
+          :key="team.id"
+          :to="{name: 'Team information', params: {id: team.id}}"
+        >
           <div class="logo-container">
-              <img :src="require(`../assets/team-logos/${team.id}.png`)" height="60px">
+            <img :src="require(`../assets/team-logos/${team.id}.png`)" height="60px">
           </div>
           <v-card-title class="teamcard-title">{{team.fullname}}</v-card-title>
-      </v-card>
-    </v-layout>
-  </v-container>
+        </v-card>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
-    export default {
-        computed: {
-            teams() {
-                return this.$store.getters.teamsOrderedAlphab
-            }
-        }
+import Loader from "@/components/Loader.vue"
+export default {
+  components: { Loader },
+  computed: {
+    teams() {
+      return this.$store.state.wsldata.teams
+        .slice(0)
+        .sort((x, y) => x.fullname - y.fullname);
     }
+  },
+  created() {
+    this.$store.dispatch("getData");
+  }
+};
 </script>
 
 <style scoped>
 .teamcard {
-    margin: 0 15px 10px 15px;
-    display: flex;
-    padding: 15px 0 15px 5px;
-    font-size: 1.2em;
+  margin: 0 15px 10px 15px;
+  display: flex;
+  padding: 15px 0 15px 5px;
+  font-size: 1.2em;
 }
-.logo-container { 
-    width: 80px;
-    display: flex;
-    justify-content: center;
+.logo-container {
+  width: 80px;
+  display: flex;
+  justify-content: center;
 }
 
 .teamcard-title {
-    padding: 0 0 0 8px;
+  padding: 0 0 0 8px;
 }
 </style>

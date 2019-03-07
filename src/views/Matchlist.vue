@@ -1,6 +1,7 @@
 <template>
   <v-container fluid grid-list-lg>
-    <v-layout column v-if="path.includes('next-matchday')">
+    <loader v-if="!this.$store.state.dataReady"></loader>
+    <v-layout column v-if="path.includes('next-matchday') && this.$store.state.dataReady">
       <matchcard      
         v-for="match in upcomingMatches"
         :key="match.name"
@@ -8,7 +9,7 @@
         class="matchcard"
       ></matchcard>
     </v-layout>
-    <v-layout column v-if="path.includes('results')">
+    <v-layout column v-if="path.includes('results')  && this.$store.state.dataReady">
       <matchcard       
         v-for="match in pastMatches"
         :key="match.name"
@@ -21,13 +22,14 @@
 
 <script>
 import Matchcard from "@/components/Matchcard.vue";
+import Loader from "@/components/Loader.vue"
 
 export default {
-  components: { Matchcard },
+  components: { Matchcard, Loader },
   computed: {
     matches() {
       return this.$store.state.wsldata.matches;
-    },
+    }, 
     teams() {
       return this.$store.state.wsldata.teams;
     },
@@ -40,6 +42,9 @@ export default {
     path() {
       return this.$route.path;
     }
+  },
+  created() {
+    this.$store.dispatch("getData")
   }
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <v-card light class="teaminfo">
+    <loader v-if="!this.$store.state.dataReady"></loader>
+    <v-card light class="teaminfo" v-else>
       <div class="teamtitle">
         <h2>{{ team.fullname }}</h2>
       </div>
@@ -82,7 +83,9 @@
 </template>
 
 <script>
+import Loader from "@/components/Loader.vue"
 export default {
+  components: { Loader },
   computed: {
     allTeams() {
       return this.$store.state.wsldata.teams.slice();
@@ -100,7 +103,9 @@ export default {
       });
     },
     teamsForTable() {
-      var orderedTeams = this.$store.getters.teamsOrderedByPos;
+      var orderedTeams = this.$store.state.wsldata.teams
+        .slice(0)
+        .sort((x, y) => x.table_position - y.table_position);
       var teamIndex = orderedTeams.indexOf(this.team);
       if (teamIndex === 0) {
         return orderedTeams.slice(0, 3);
@@ -115,6 +120,9 @@ export default {
     getTeamName(teamId) {
       return this.allTeams.filter(team => teamId === team.id)[0].fullname;
     }
+  },
+  created() {
+    this.$store.dispatch("getData");
   }
 };
 </script>

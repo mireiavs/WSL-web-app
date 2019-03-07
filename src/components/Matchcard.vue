@@ -40,6 +40,9 @@ export default {
         team => team.id === this.match.away_team
       ).fullname;
     }    
+  },
+    created() {
+    this.$store.dispatch("getData")
   }
 }
 </script>

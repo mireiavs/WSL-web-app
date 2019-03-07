@@ -16,7 +16,7 @@
     </v-btn>
 
     <v-btn color="##26A93D" flat to="/chat">
-      <span>Chat</span>
+      <span>Chatrooms</span>
       <v-icon>mdi-forum</v-icon>
     </v-btn>
 

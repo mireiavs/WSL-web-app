@@ -1,130 +1,90 @@
 <template>
   <div>
-    <div class="logos">
-      <router-link class="team" :to="{name: 'Team information', params: {id: homeTeam.id}}">
-        <img :src="require(`../assets/team-logos/${homeTeam.id}.png`)">
-      </router-link>
-      <div class="separator2">{{ separator }}</div>
-      <router-link class="team" :to="{name: 'Team information', params: {id: awayTeam.id}}">
-        <img :src="require(`../assets/team-logos/${awayTeam.id}.png`)">
-      </router-link>
-    </div>
-    <div class="team-names">
-      <p>{{ homeTeam.fullname }}</p>
-      <div class="separator2"></div>
-      <p>{{ awayTeam.fullname }}</p>
-    </div>
-    <v-container fluid grid-list-lg>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <v-card color="white" light>
-            <v-card-text>
-              <div>
-                <div class="cardtitle">Date</div>
-                <div>{{ match.match_date }} at {{ match.kick_off }}</div>
-              </div>
-              <div v-show="match.match_id > 5">
-                <div class="cardtitle">Location</div>
-                <span>{{ homeTeam.stadium.name }} in {{ homeTeam.stadium.town }}</span>
-                <iframe class="map" :src="homeTeam.stadium.map" frameborder="0" allowfullscreen></iframe>
-              </div>
-              <div v-show="match.match_id <= 5">
-                <div class="cardtitle">Goal scorers</div>
-                <div class="lineups">
-                  <div class="lineup" v-show="match.home_score !== 0">
-                    <h4>{{ homeTeam.fullname }}</h4>
-                    <p v-for="(player, index) in getGoalScorers(homeTeam)" :key="index">
-                      <v-icon light>mdi-soccer</v-icon>
-                      {{ player }}
-                    </p>
-                  </div>
-                  <div class="lineup" v-show="match.away_score !== 0">
-                    <h4>{{ awayTeam.fullname }}</h4>
-                    <p v-for="(player, index) in getGoalScorers(awayTeam)" :key="index">
-                      <v-icon light>mdi-soccer</v-icon>
-                      {{ player }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div v-show="match.match_id <= 5">
-                <div class="cardtitle">Line-ups</div>
-                <div class="lineups">
-                  <div class="lineup">
-                    <h4>{{ homeTeam.fullname }}</h4>
-                    <p
-                      v-for="(player, index) in getRandomPlayers(homeTeam)"
-                      :key="index"
-                    >{{ player }}</p>
-                  </div>
-                  <div class="lineup">
-                    <h4>{{ awayTeam.fullname }}</h4>
-                    <p
-                      v-for="(player, index) in getRandomPlayers(awayTeam)"
-                      :key="index"
-                    >{{ player }}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="chat">
-                <div class="cardtitle">Match chatroom</div>
-                <div id="messages" ref="messages" class="messages">
-                  <div v-for="(message, index) in messages" class="message" :key="index">
-                    <p>{{ message.author }} on {{message.timestamp}}:</p>
-                    <p>{{ message.message }}</p>
-                  </div>
-                </div>
+    <loader v-if="!this.$store.state.dataReady"></loader>
+    <div v-else>
+      <div class="logos">
+        <router-link class="team" :to="{name: 'Team information', params: {id: homeTeam.id}}">
+          <img :src="require(`../assets/team-logos/${homeTeam.id}.png`)">
+        </router-link>
+        <div class="separator2">{{ separator }}</div>
+        <router-link class="team" :to="{name: 'Team information', params: {id: awayTeam.id}}">
+          <img :src="require(`../assets/team-logos/${awayTeam.id}.png`)">
+        </router-link>
+      </div>
+      <div class="team-names">
+        <p>{{ homeTeam.fullname }}</p>
+        <div class="separator2"></div>
+        <p>{{ awayTeam.fullname }}</p>
+      </div>
+      <v-container fluid grid-list-lg>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-card color="white" light>
+              <v-card-text>
                 <div>
-                  <div v-show="!checkAuth() || showButtons">
-                    <p class="loginmessage">You need to log in to be able to post messages</p>
-                    <div class="buttons">
-                      <v-btn @click="openLogIn()">Login</v-btn>
-                      <v-btn @click="openSignUp()">Sign up</v-btn>
+                  <div class="cardtitle">Date</div>
+                  <div>{{ match.match_date }} at {{ match.kick_off }}</div>
+                </div>
+                <div v-show="match.match_id > 5">
+                  <div class="cardtitle">Location</div>
+                  <span>{{ homeTeam.stadium.name }} in {{ homeTeam.stadium.town }}</span>
+                  <iframe class="map" :src="homeTeam.stadium.map" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div v-show="match.match_id <= 5">
+                  <div class="cardtitle">Goal scorers</div>
+                  <div class="lineups">
+                    <div class="lineup" v-show="match.home_score !== 0">
+                      <h4>{{ homeTeam.fullname }}</h4>
+                      <p v-for="(player, index) in getGoalScorers(homeTeam)" :key="index">
+                        <v-icon light>mdi-soccer</v-icon>
+                        {{ player }}
+                      </p>
                     </div>
-                  </div>
-
-                  <div v-show="showLogIn">
-                    <v-text-field v-model="email" label="Email" type="email"></v-text-field>
-                    <v-text-field v-model="password" label="Password" type="password"></v-text-field>
-                    <div class="buttons">
-                      <v-btn @click="logIn()">Submit</v-btn>
-                    </div>
-                  </div>
-
-                  <div v-show="showSignUp">
-                    <v-text-field v-model="displayName" label="Full name" type="text"></v-text-field>
-                    <v-text-field v-model="email" label="Email" type="email"></v-text-field>
-                    <v-text-field v-model="password" label="Password" type="password"></v-text-field>
-                    <div class="buttons">
-                      <v-btn @click="signUp()">Submit</v-btn>
-                    </div>
-                  </div>
-
-                  <div v-show="checkAuth()">
-                    <v-text-field
-                      type="text"
-                      v-model="message"
-                      placeholder="Your message..."
-                      @keyup.enter="sendMessage()"
-                    ></v-text-field>
-                    <v-btn @click="sendMessage()">Send</v-btn>
-
-                    <div v-show="checkAuth()" class="buttons">
-                      <v-btn @click="logOut()" class="logout" dark>Log Out</v-btn>
+                    <div class="lineup" v-show="match.away_score !== 0">
+                      <h4>{{ awayTeam.fullname }}</h4>
+                      <p v-for="(player, index) in getGoalScorers(awayTeam)" :key="index">
+                        <v-icon light>mdi-soccer</v-icon>
+                        {{ player }}
+                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+
+                <div v-show="match.match_id <= 5">
+                  <div class="cardtitle">Line-ups</div>
+                  <div class="lineups">
+                    <div class="lineup">
+                      <h4>{{ homeTeam.fullname }}</h4>
+                      <p
+                        v-for="(player, index) in getRandomPlayers(homeTeam)"
+                        :key="index"
+                      >{{ player }}</p>
+                    </div>
+                    <div class="lineup">
+                      <h4>{{ awayTeam.fullname }}</h4>
+                      <p
+                        v-for="(player, index) in getRandomPlayers(awayTeam)"
+                        :key="index"
+                      >{{ player }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="cardtitle">Match chatroom</div>
+                <matchchat></matchchat>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </div>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+import Matchchat from "@/components/Matchchat.vue";
+import Loader from "@/components/Loader.vue"
+
 export default {
   data() {
     return {
@@ -136,9 +96,10 @@ export default {
       showSignUp: false,
       showSend: false,
       showButtons: false,
-      messages: []
+      messages: [],
     };
   },
+  components: { Matchchat, Loader },
   computed: {
     match() {
       return this.$store.state.wsldata.matches[this.$route.params.id - 1];
@@ -193,94 +154,10 @@ export default {
         goalScorers.push(randomPlayer);
       }
       return goalScorers;
-    },
-    openLogIn() {
-      this.showLogIn = !this.showLogIn;
-      this.showSignUp = false
-    },
-    openSignUp() {
-      this.showSignUp = !this.showSignUp;
-      this.showLogIn = false
-    },
-    signUp() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          this.showSend = true;
-          this.showLogIn = false;
-          this.authStatus = true;
-          this.showButtons = false;
-          this.showSignUp = false;
-          firebase
-            .auth()
-            .currentUser.updateProfile({ displayName: this.displayName });
-        });
-    },
-    logIn() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          this.showSend = true;
-          this.showLogIn = false;
-          this.authStatus = true;
-          this.showButtons = false;
-        });
-    },
-    logOut() {
-      firebase.auth().signOut();
-      this.showButtons = true;
-    },
-    sendMessage() {
-      var date = new Date();
-      var day = ("0" + date.getDate()).slice(-2)
-      var month = ("0" + date.getMonth()).slice(-2)
-      var year =  date.getFullYear();
-      var hours = ("0" + date.getHours()).slice(-2)
-      var minutes = ("0" + date.getMinutes()).slice(-2)
-      
-      var objectToSend = {
-        message: this.message,
-        author: firebase.auth().currentUser.displayName,
-/*         timestamp: day + "/" + month + "/" + year + " at " + hours + ":" + minutes, */
-        timestamp: `${day}/${month}/${year} at ${hours}:${minutes}`
-      };
-      var databaseName = "Match" + this.match.match_id;
-      firebase
-        .database()
-        .ref(databaseName)
-        .push(objectToSend);
-      this.message = "";
-    },
-    getMessages() {
-      var databaseName = "Match" + this.match.match_id;
-      firebase
-        .database()
-        .ref(databaseName)
-        .on("value", data => {
-          this.messages = data.val();
-        });
-    },
-    checkAuth() {
-      if (firebase.auth().currentUser === null) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    chatScroll() {
-      document.getElementById("messages").scrollTop = document.getElementById(
-        "messages"
-      ).scrollHeight;
     }
   },
-  mounted() {
-    this.getMessages();
-  },
-  updated() {
-    this.checkAuth();
-    this.chatScroll();
+  created() {
+    this.$store.dispatch("getData");
   }
 };
 </script>
@@ -355,7 +232,7 @@ export default {
   border-radius: 10px;
   width: 80%;
   padding: 5px;
-  background-color: #a8a6a6cb;
+  background-color: #d1cececb;
 }
 .message p {
   margin-bottom: 0;
