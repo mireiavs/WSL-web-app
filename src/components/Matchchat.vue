@@ -1,7 +1,11 @@
 <template>
   <div class="chat">
     <div ref="messages" class="messages">
-      <div v-for="(message, index) in messages" class="message" :key="index">
+      <div
+        v-for="(message, index) in messages"
+        :key="index"
+        :class="{ 'message' : true, 'sameauthor': checkDisplayName(message.author) }"
+      >
         <p>{{ message.author }} on {{message.timestamp}}:</p>
         <p>{{ message.message }}</p>
       </div>
@@ -19,15 +23,17 @@
       <div v-show="showLogIn">
         <v-text-field v-model="email" label="Email" type="email" @keyup.enter="logIn()"></v-text-field>
         <v-text-field v-model="password" label="Password" type="password" @keyup.enter="logIn()"></v-text-field>
+        <p class="errormessage">{{ loginerror }}</p>
         <div class="buttons">
           <v-btn @click="logIn()">Submit</v-btn>
         </div>
       </div>
 
       <div v-show="showSignUp">
-        <v-text-field v-model="displayName" label="Full name" type="text"></v-text-field>
-        <v-text-field v-model="email" label="Email" type="email"></v-text-field>
-        <v-text-field v-model="password" label="Password" type="password"></v-text-field>
+        <v-text-field v-model="displayName" label="Full name" type="text" @keyup.enter="signUp()"></v-text-field>
+        <v-text-field v-model="email" label="Email" type="email" @keyup.enter="signUp()"></v-text-field>
+        <v-text-field v-model="password" label="Password" type="password" @keyup.enter="signUp()"></v-text-field>
+        <p class="errormessage">{{ loginerror }}</p>
         <div class="buttons">
           <v-btn @click="signUp()">Submit</v-btn>
         </div>
@@ -40,7 +46,7 @@
           placeholder="Your message..."
           @keyup.enter="sendMessage()"
         ></v-text-field>
-        <p class="emptymessage" v-if="this.emptyMessage === true">You can't send an empty message.</p>
+        <p class="errormessage" v-if="this.emptyMessage === true">You can't send an empty message.</p>
         <v-btn @click="sendMessage()">Send</v-btn>
 
         <div v-show="checkAuth()" class="buttons">
@@ -65,7 +71,8 @@ export default {
       showSignUp: false,
       showButtons: false,
       messages: [],
-      emptyMessage: false
+      emptyMessage: false,
+      loginerror: ""
     };
   },
   computed: {
@@ -77,24 +84,34 @@ export default {
     openLogIn() {
       this.showLogIn = !this.showLogIn;
       this.showSignUp = false;
+      this.loginerror = ""
     },
     openSignUp() {
       this.showSignUp = !this.showSignUp;
       this.showLogIn = false;
+      this.loginerror = ""
     },
     signUp() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          this.showLogIn = false;
-          this.authStatus = true;
-          this.showButtons = false;
-          this.showSignUp = false;
-          firebase
-            .auth()
-            .currentUser.updateProfile({ displayName: this.displayName });
-        });
+      if (this.displayName === "") {
+        this.loginerror = "Error: Please enter your full name"
+      } else {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(user => {
+            this.showLogIn = false;
+            this.authStatus = true;
+            this.showButtons = false;
+            this.showSignUp = false;
+            this.loginerror = "";
+            firebase
+              .auth()
+              .currentUser.updateProfile({ displayName: this.displayName });
+          })
+          .catch(error => {
+            this.loginerror = error;
+          });
+      }
     },
     logIn() {
       firebase
@@ -104,6 +121,10 @@ export default {
           this.showLogIn = false;
           this.authStatus = true;
           this.showButtons = false;
+          this.loginerror = "";
+        })
+        .catch(error => {
+          this.loginerror = error;
         });
     },
     logOut() {
@@ -133,7 +154,7 @@ export default {
           .ref(databaseName)
           .push(objectToSend);
         this.message = "";
-        this.emptyMessage = false
+        this.emptyMessage = false;
       }
     },
     getMessages() {
@@ -154,6 +175,14 @@ export default {
     },
     chatScroll() {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+    },
+    checkDisplayName(author) {
+      if (firebase.auth().currentUser !== null) {
+        var check = firebase.auth().currentUser.displayName === author;
+        return check;
+      } else {
+        return false;
+      }
     }
   },
   mounted() {
@@ -196,7 +225,11 @@ p.loginmessage {
   display: flex;
   justify-content: center;
 }
-.emptymessage {
-    font-weight: bold;
+.errormessage {
+  font-weight: bold;
+}
+.sameauthor {
+  background-color: rgb(171, 141, 190);
+  margin-left: 18%;
 }
 </style>

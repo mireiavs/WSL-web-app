@@ -1,17 +1,18 @@
 <template>
   <v-card light class="match-chat" :to="{name: 'Match information', params: {id: match.match_id}}">
     <h4>{{ match.home_team }} vs. {{ match.away_team }}</h4>
-    <p
-      v-if="messages === null"
-      class="no-messages"
-      ref="messages"
-    >There are no messages on this match chatroom yet.</p>
-    <div v-else class="chat-messages" ref="messages">
-      <div v-for="(message, index) in latestMessages" :key="index" class="message">
-        <p>{{ message.author }} on {{ message.timestamp}}:</p>
-        <p>{{ message.message }}</p>
+      <p
+        v-if="messages === null"
+        class="no-messages"
+        ref="messages"
+      >There are no messages on this match chatroom yet.</p>
+      <div v-else class="chat-messages" ref="messages">
+        <div v-for="(message, index) in latestMessages" :key="index" class="message">
+          <p>{{ message.author }} on {{ message.timestamp}}:</p>
+          <p>{{ message.message }}</p>
+        </div>
       </div>
-    </div>
+
   </v-card>
 </template>
 
@@ -27,16 +28,19 @@ export default {
   },
   computed: {
     latestMessages() {
-    var indexes = Object.keys(this.messages);
-    var messagesToShow = [];
+      var indexes = Object.keys(this.messages);
+      var messagesToShow = [];
       if (indexes.length > 3) {
         for (var i = indexes.length - 1; i > indexes.length - 4; i--) {
           messagesToShow.push(this.messages[indexes[i]]);
         }
         return messagesToShow;
       } else {
-          return this.messages
+        return this.messages;
       }
+    },
+    homeTeamName() {
+      return this.$store.state.wsldata.teams.find(team => team.id === this.match.home_team)
     }
   },
   methods: {
