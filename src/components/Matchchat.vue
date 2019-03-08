@@ -1,22 +1,26 @@
 <template>
   <div class="chat">
     <div ref="messages" class="messages">
-      <div
-        v-for="(message, index) in messages"
-        :key="index"
-        :class="{ 'message' : true, 'sameauthor': checkDisplayName(message.author) }"
-      >
-        <p>{{ message.author }} on {{message.timestamp}}:</p>
-        <p>{{ message.message }}</p>
+      <div v-if="checkAuth()">
+        <div
+          v-for="(message, index) in messages"
+          :key="index"
+          :class="{ 'message' : true, 'sameauthor': checkEmail(message.email) }"
+        >
+          <p class="msg-author">{{ message.author }} on {{message.timestamp}}:</p>
+          <p>{{ message.message }}</p>
+        </div>
+      </div>
+      <div v-if="!checkAuth() || showButtons" class="messages-no-login">
+        <p class="loginmessage">You need to log in to be able to see and post messages</p>
       </div>
     </div>
 
     <div>
       <div v-show="!checkAuth() || showButtons">
-        <p class="loginmessage">You need to log in to be able to post messages</p>
         <div class="buttons">
-          <v-btn @click="openLogIn()">Login</v-btn>
-          <v-btn @click="openSignUp()">Sign up</v-btn>
+          <v-btn @click="openLogIn()" color="#908f8f" dark>Login</v-btn>
+          <v-btn @click="openSignUp()" color="#908f8f" dark>Sign up</v-btn>
         </div>
       </div>
 
@@ -24,8 +28,8 @@
         <v-text-field v-model="email" label="Email" type="email" @keyup.enter="logIn()"></v-text-field>
         <v-text-field v-model="password" label="Password" type="password" @keyup.enter="logIn()"></v-text-field>
         <p class="errormessage">{{ loginerror }}</p>
-        <div class="buttons">
-          <v-btn @click="logIn()">Submit</v-btn>
+        <div class="submit">
+          <v-btn @click="logIn()" color="#908f8f" dark>Submit</v-btn>
         </div>
       </div>
 
@@ -34,23 +38,25 @@
         <v-text-field v-model="email" label="Email" type="email" @keyup.enter="signUp()"></v-text-field>
         <v-text-field v-model="password" label="Password" type="password" @keyup.enter="signUp()"></v-text-field>
         <p class="errormessage">{{ loginerror }}</p>
-        <div class="buttons">
-          <v-btn @click="signUp()">Submit</v-btn>
+        <div class="submit">
+          <v-btn @click="signUp()" color="#908f8f" dark>Submit</v-btn>
         </div>
       </div>
 
       <div v-show="checkAuth()">
-        <v-text-field
-          type="text"
-          v-model="message"
-          placeholder="Your message..."
-          @keyup.enter="sendMessage()"
-        ></v-text-field>
-        <p class="errormessage" v-if="this.emptyMessage === true">You can't send an empty message.</p>
-        <v-btn @click="sendMessage()">Send</v-btn>
+        <div class="send">
+          <v-text-field
+            type="text"
+            v-model="message"
+            placeholder="Your message..."
+            @keyup.enter="sendMessage()"
+          ></v-text-field>
 
+          <v-btn @click="sendMessage()" small outline color="gray">Send</v-btn>
+        </div>
+        <p class="errormessage" v-if="this.emptyMessage === true">You can't send an empty message.</p>
         <div v-show="checkAuth()" class="buttons">
-          <v-btn @click="logOut()" class="logout" dark>Log Out</v-btn>
+          <v-btn @click="logOut()" class="logout" color="#908f8f" dark>Log Out</v-btn>
         </div>
       </div>
     </div>
@@ -84,16 +90,16 @@ export default {
     openLogIn() {
       this.showLogIn = !this.showLogIn;
       this.showSignUp = false;
-      this.loginerror = ""
+      this.loginerror = "";
     },
     openSignUp() {
       this.showSignUp = !this.showSignUp;
       this.showLogIn = false;
-      this.loginerror = ""
+      this.loginerror = "";
     },
     signUp() {
       if (this.displayName === "") {
-        this.loginerror = "Error: Please enter your full name"
+        this.loginerror = "Error: Please enter your full name";
       } else {
         firebase
           .auth()
@@ -130,6 +136,7 @@ export default {
     logOut() {
       firebase.auth().signOut();
       this.showButtons = true;
+      this.emptyMessage = false
     },
     sendMessage() {
       if (this.message === "") {
@@ -146,7 +153,8 @@ export default {
           message: this.message,
           author: firebase.auth().currentUser.displayName,
           timestamp: `${day}/${month}/${year} at ${hours}:${minutes}`,
-          realTimestamp: firebase.database.ServerValue.TIMESTAMP
+          realTimestamp: firebase.database.ServerValue.TIMESTAMP,
+          email: firebase.auth().currentUser.email
         };
         var databaseName = "Match" + this.match.match_id;
         firebase
@@ -176,9 +184,9 @@ export default {
     chatScroll() {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
     },
-    checkDisplayName(author) {
+    checkEmail(email) {
       if (firebase.auth().currentUser !== null) {
-        var check = firebase.auth().currentUser.displayName === author;
+        var check = firebase.auth().currentUser.email === email;
         return check;
       } else {
         return false;
@@ -212,18 +220,11 @@ export default {
 .message p {
   margin-bottom: 0;
 }
-p.loginmessage {
-  font-weight: bold;
-  margin: 10px 0 10px 0;
-}
-.inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 .buttons {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 .errormessage {
   font-weight: bold;
@@ -231,5 +232,27 @@ p.loginmessage {
 .sameauthor {
   background-color: rgb(171, 141, 190);
   margin-left: 18%;
+}
+.messages-no-login {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+}
+p.loginmessage {
+  font-weight: bold;
+  text-align: center;
+}
+.msg-author {
+  font-weight: bold;
+}
+.send {
+  display: flex;
+  align-items: center;
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
 }
 </style>
