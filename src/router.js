@@ -32,7 +32,7 @@ export default new Router({
     },
     {
       path: "/next-matchday",
-      name: "Next Matchday",
+      name: "Next Matches",
       component: Matchlist
     },
     {

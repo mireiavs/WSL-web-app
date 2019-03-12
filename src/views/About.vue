@@ -40,7 +40,8 @@ export default {
   margin: 0 20px 0 20px;
   padding: 20px;
   font-size: 1.1em;
-  text-align: center
+  text-align: center;
+  margin-bottom: 25px;
 }
 .icons {
   display: flex;
@@ -55,5 +56,12 @@ export default {
 .contact p {
   margin-bottom: 0;
   margin-top: 20px;
+}
+@media only screen and (orientation: landscape) {
+  .about-contact {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 </style>

@@ -19,18 +19,18 @@
       <v-container fluid grid-list-lg>
         <v-layout row wrap>
           <v-flex xs12>
-            <v-card color="white" light>
+            <v-card color="white" light class="match-info">
               <v-card-text>
                 <div>
                   <div class="cardtitle">Date</div>
                   <div>{{ match.match_date }} at {{ match.kick_off }}</div>
                 </div>
-                <div v-show="match.match_id > 5">
+                <div v-if="match.match_id > 5">
                   <div class="cardtitle">Location</div>
                   <span>{{ homeTeam.stadium.name }} in {{ homeTeam.stadium.town }}</span>
                   <iframe class="map" :src="homeTeam.stadium.map" frameborder="0" allowfullscreen></iframe>
                 </div>
-                <div v-show="match.match_id <= 5">
+                <div v-if="match.match_id <= 5">
                   <div class="cardtitle">Goal scorers</div>
                   <div class="lineups">
                     <div class="lineup" v-show="match.home_score !== 0">
@@ -51,25 +51,10 @@
                 </div>
 
                 <div v-show="match.match_id <= 5">
-                  <div class="cardtitle">Line-ups</div>
-                  <div class="lineups">
-                    <div class="lineup">
-                      <h4>{{ homeTeam.fullname }}</h4>
-                      <p
-                        v-for="(player, index) in getRandomPlayers(homeTeam)"
-                        :key="index"
-                      >{{ player }}</p>
-                    </div>
-                    <div class="lineup">
-                      <h4>{{ awayTeam.fullname }}</h4>
-                      <p
-                        v-for="(player, index) in getRandomPlayers(awayTeam)"
-                        :key="index"
-                      >{{ player }}</p>
-                    </div>
-                  </div>
+                  <lineups></lineups>
                 </div>
                 <div class="cardtitle">Match chatroom</div>
+
                 <matchchat></matchchat>
               </v-card-text>
             </v-card>
@@ -83,7 +68,8 @@
 <script>
 import firebase from "firebase";
 import Matchchat from "@/components/Matchchat.vue";
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/Loader.vue";
+import Lineups from "@/components/Lineups.vue";
 
 export default {
   data() {
@@ -96,10 +82,10 @@ export default {
       showSignUp: false,
       showSend: false,
       showButtons: false,
-      messages: [],
+      messages: []
     };
   },
-  components: { Matchchat, Loader },
+  components: { Matchchat, Loader, Lineups },
   computed: {
     match() {
       return this.$store.state.wsldata.matches[this.$route.params.id - 1];
@@ -129,17 +115,6 @@ export default {
     }
   },
   methods: {
-    getRandomPlayers(team) {
-      var lineup = [];
-      var allPlayers = team.players.slice();
-      for (var i = 0; i < 11; i++) {
-        var randomPlayer =
-          allPlayers[Math.floor(Math.random() * allPlayers.length)];
-        lineup.push(randomPlayer);
-        allPlayers.splice(allPlayers.indexOf(randomPlayer), 1);
-      }
-      return lineup;
-    },
     getGoalScorers(team) {
       var goalScorers = [];
       var goals;
@@ -249,5 +224,32 @@ p.loginmessage {
 .buttons {
   display: flex;
   justify-content: center;
+}
+.subs {
+  display: flex;
+}
+.subs p {
+  margin-bottom: 0;
+}
+.substituted {
+  flex-grow: 1;
+  text-align: right;
+}
+.substitutes {
+  flex-grow: 1;
+}
+.subs-title {
+  text-align: center;
+}
+.subs-title-away {
+  margin-top: 20px;
+  text-align: center;
+}
+@media only screen and (orientation: landscape) {
+  .match-info {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 </style>

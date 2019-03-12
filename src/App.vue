@@ -44,10 +44,10 @@ export default {
   background-position: bottom;
   background-attachment: fixed;
 }
-
 .backbutton {
   position: absolute;
   left: 10px;
   top: 7px;
   }
+
 </style>

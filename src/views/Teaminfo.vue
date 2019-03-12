@@ -193,4 +193,11 @@ a.upcoming-games {
   margin-top: 10px;
   width: 100%;
 }
+@media only screen and (orientation: landscape) {
+  .teaminfo {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 </style>

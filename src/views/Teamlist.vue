@@ -49,8 +49,15 @@ export default {
   display: flex;
   justify-content: center;
 }
-
 .teamcard-title {
   padding: 0 0 0 8px;
+}
+
+@media only screen and (orientation: landscape) {
+  .teamcard {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 </style>

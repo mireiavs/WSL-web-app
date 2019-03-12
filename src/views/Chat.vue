@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="chat-container">
     <loader v-if="!this.$store.state.dataReady"></loader>
     <div v-else>
       <div v-if="checkAuth() && !this.showButtons">
         <p
           class="chat-welcome"
-        >We are only showing you the latest messages from each chatroom. Click on a specific chatroom to go to the match page and be able to see the full conversation and join in.</p>
+        >We are only showing you the latest messages from each chatroom. Click on a specific chatroom to go to the match page, see the full conversation and join in.</p>
         <Matchchatpreview v-for="(match, index) in matches" :key="index" :match="match"></Matchchatpreview>
         <div v-show="checkAuth()" class="buttons">
           <v-btn @click="logOut()" class="logout" light>Log Out</v-btn>
@@ -46,7 +46,13 @@
               type="text"
               @keyup.enter="signUp()"
             ></v-text-field>
-            <v-text-field v-model="email" label="Email" type="email" @keyup.enter="signUp()"></v-text-field>
+            <v-text-field
+              v-model="email"
+              label="Email"
+              type="email"
+              @keyup.enter="signUp()"
+              id="email"
+            ></v-text-field>
             <v-text-field
               v-model="password"
               label="Password"
@@ -171,7 +177,7 @@ export default {
     this.$store.dispatch("getData");
   },
   updated() {
-    this.checkAuth()
+    this.checkAuth();
   }
 };
 </script>
@@ -193,5 +199,12 @@ export default {
 }
 .login {
   margin: 0 20px 0 20px;
+}
+@media only screen and (orientation: landscape) {
+  .chat-container {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto
+  }
 }
 </style>

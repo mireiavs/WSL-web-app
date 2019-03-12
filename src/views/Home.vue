@@ -4,10 +4,12 @@
       <h3>Welcome to our website about the WSL</h3>
       <p>You can find all the information on the league by visiting the links below.</p>
     </div>
-    <v-btn class="homelink" large block light to="./next-matchday">Next Matchday</v-btn>
-    <v-btn class="homelink" large block light to="./results">Results</v-btn>
-    <v-btn class="homelink" large block light to="./table">Table</v-btn>
-    <v-btn class="homelink" large block light to="./team-list">Teams</v-btn>
+    <div class="homebuttons">
+      <v-btn class="homelink" large block light to="./next-matchday">Next Matches</v-btn>
+      <v-btn class="homelink" large block light to="./results">Results</v-btn>
+      <v-btn class="homelink" large block light to="./table">Table</v-btn>
+      <v-btn class="homelink" large block light to="./team-list">Teams</v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -15,7 +17,7 @@
 export default {
   name: "home",
   created() {
-    this.$store.dispatch("getData")
+    this.$store.dispatch("getData");
   }
 };
 </script>
@@ -36,5 +38,23 @@ export default {
   font-size: 1.3em;
   margin-bottom: 10px;
 }
+@media only screen and (min-width: 768px) {
+  .homelink {
+    height: 150px;
+    margin: 0 auto 20px auto;
+    font-size: 1.5em;
+    width: 75%;
+  }
+}
 
+@media only screen and (orientation: landscape) {
+  .homelink {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .welcome-text {
+    margin-top: 0;
+  }
+}
 </style>

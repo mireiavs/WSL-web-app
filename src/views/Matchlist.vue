@@ -53,4 +53,11 @@ export default {
 .matchcard {
   margin: 0 15px 20px 15px;
 }
+@media only screen and (orientation: landscape) {
+  .matchcard {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 </style>

@@ -55,6 +55,7 @@
           <v-btn @click="sendMessage()" small outline color="gray">Send</v-btn>
         </div>
         <p class="errormessage" v-if="this.emptyMessage === true">You can't send an empty message.</p>
+        <p class="errormessage" v-if="this.profanityMessage === true">Please do not use swear words.</p>
         <div v-show="checkAuth()" class="buttons">
           <v-btn @click="logOut()" class="logout" color="#908f8f" dark>Log Out</v-btn>
         </div>
@@ -78,12 +79,17 @@ export default {
       showButtons: false,
       messages: [],
       emptyMessage: false,
+      profanityMessage: false,
       loginerror: ""
     };
   },
   computed: {
     match() {
       return this.$store.state.wsldata.matches[this.$route.params.id - 1];
+    },
+    messageSwear() {
+      var swear = this.$store.state.swearwords;
+      return swear.filter(swearword => this.message.includes(swearword));
     }
   },
   methods: {
@@ -136,11 +142,16 @@ export default {
     logOut() {
       firebase.auth().signOut();
       this.showButtons = true;
-      this.emptyMessage = false
+      this.emptyMessage = false;
+      this.profanityMessage = false;
     },
     sendMessage() {
-      if (this.message === "") {
+      if (this.message === "" || /^\s+$/.test(this.message)) {
         this.emptyMessage = true;
+        this.profanityMessage = false;
+      } else if (this.messageSwear.length !== 0) {
+        this.profanityMessage = true;
+        this.emptyMessage = false;
       } else {
         var date = new Date();
         var day = ("0" + date.getDate()).slice(-2);
@@ -163,6 +174,7 @@ export default {
           .push(objectToSend);
         this.message = "";
         this.emptyMessage = false;
+        this.profanityMessage = false;
       }
     },
     getMessages() {
