@@ -2,10 +2,13 @@
   <v-app dark>
     <headercomp></headercomp>
     <v-content class="content">
-      <v-btn flat @click="$router.go(-1)" class="backbutton" v-show="this.$route.path !== '/'">
-        <v-icon large>mdi-chevron-left</v-icon> 
-      </v-btn>
-      <h3 class="title" v-show="this.$route.path !== '/'">{{title}}</h3>
+      <div v-show="this.$route.path !== '/'">
+        <v-btn flat @click="$router.go(-1)" class="backbutton">
+          <v-icon large>mdi-chevron-left</v-icon>
+        </v-btn>
+        <h3 class="title">{{title}}</h3>
+      </div>
+
       <router-view></router-view>
     </v-content>
     <navcomp></navcomp>
@@ -48,6 +51,5 @@ export default {
   position: absolute;
   left: 10px;
   top: 7px;
-  }
-
+}
 </style>

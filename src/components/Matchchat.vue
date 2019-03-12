@@ -54,8 +54,12 @@
 
           <v-btn @click="sendMessage()" small outline color="gray">Send</v-btn>
         </div>
-        <p class="errormessage" v-if="this.emptyMessage === true">You can't send an empty message.</p>
-        <p class="errormessage" v-if="this.profanityMessage === true">Please do not use swear words.</p>
+        <p class="errormessage" v-if="this.emptyMessage === true">
+          You can't send an empty message.
+        </p>
+        <p class="errormessage" v-if="this.profanityMessage === true">
+          Please do not use swear words.
+        </p>
         <div v-show="checkAuth()" class="buttons">
           <v-btn @click="logOut()" class="logout" color="#908f8f" dark>Log Out</v-btn>
         </div>
@@ -110,7 +114,7 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
+          .then(() => {
             this.showLogIn = false;
             this.authStatus = true;
             this.showButtons = false;
@@ -129,7 +133,7 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(user => {
+        .then(() => {
           this.showLogIn = false;
           this.authStatus = true;
           this.showButtons = false;

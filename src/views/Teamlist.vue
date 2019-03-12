@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/Loader.vue";
+
 export default {
   components: { Loader },
   computed: {
@@ -44,11 +45,13 @@ export default {
   padding: 15px 0 15px 5px;
   font-size: 1.2em;
 }
+
 .logo-container {
   width: 80px;
   display: flex;
   justify-content: center;
 }
+
 .teamcard-title {
   padding: 0 0 0 8px;
 }
@@ -56,8 +59,7 @@ export default {
 @media only screen and (orientation: landscape) {
   .teamcard {
     width: 65%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 10px auto;
   }
 }
 </style>

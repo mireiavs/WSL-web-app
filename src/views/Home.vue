@@ -38,20 +38,12 @@ export default {
   font-size: 1.3em;
   margin-bottom: 10px;
 }
-@media only screen and (min-width: 768px) {
-  .homelink {
-    height: 150px;
-    margin: 0 auto 20px auto;
-    font-size: 1.5em;
-    width: 75%;
-  }
-}
+
 
 @media only screen and (orientation: landscape) {
   .homelink {
     width: 65%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 20px auto;
   }
   .welcome-text {
     margin-top: 0;

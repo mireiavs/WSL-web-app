@@ -54,14 +54,12 @@ export default {
   text-decoration: none;
 }
 .contact p {
-  margin-bottom: 0;
-  margin-top: 20px;
+   margin: 20px 0 0 0;
 }
 @media only screen and (orientation: landscape) {
   .about-contact {
     width: 65%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto
   }
 }
 </style>

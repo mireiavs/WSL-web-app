@@ -3,9 +3,7 @@
     <loader v-if="!this.$store.state.dataReady"></loader>
     <div v-else>
       <div v-if="checkAuth() && !this.showButtons">
-        <p
-          class="chat-welcome"
-        >We are only showing you the latest messages from each chatroom. Click on a specific chatroom to go to the match page, see the full conversation and join in.</p>
+        <p class="chat-welcome">We are only showing you the latest messages from each chatroom. Click on a specific chatroom to go to the match page, see the full conversation and join in.</p>
         <Matchchatpreview v-for="(match, index) in matches" :key="index" :match="match"></Matchchatpreview>
         <div v-show="checkAuth()" class="buttons">
           <v-btn @click="logOut()" class="logout" light>Log Out</v-btn>
@@ -26,7 +24,12 @@
           </div>
 
           <div v-show="showLogIn" class="login">
-            <v-text-field v-model="email" label="Email" type="email" @keyup.enter="logIn()"></v-text-field>
+            <v-text-field
+              v-model="email"
+              label="Email"
+              type="email"
+              @keyup.enter="logIn()"
+            ></v-text-field>
             <v-text-field
               v-model="password"
               label="Password"
@@ -139,7 +142,7 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
+          .then(() => {
             this.showLogIn = false;
             this.authStatus = true;
             this.showButtons = false;
@@ -158,7 +161,7 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(user => {
+        .then(() => {
           this.showLogIn = false;
           this.authStatus = true;
           this.showButtons = false;
@@ -189,7 +192,6 @@ export default {
 .no-login {
   text-align: center;
 }
-
 .buttons {
   display: flex;
   justify-content: center;
@@ -203,8 +205,7 @@ export default {
 @media only screen and (orientation: landscape) {
   .chat-container {
     width: 75%;
-    margin-left: auto;
-    margin-right: auto
+    margin: auto;
   }
 }
 </style>

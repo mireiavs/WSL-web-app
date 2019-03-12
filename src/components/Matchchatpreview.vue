@@ -1,18 +1,17 @@
 <template>
   <v-card light class="match-chat" :to="{name: 'Match information', params: {id: match.match_id}}">
     <h4>{{ homeTeamName }} vs. {{ awayTeamName }}</h4>
-    <p
-      v-if="messages === null"
-      class="no-messages"
-      ref="messages"
-    >There are no messages on this match chatroom yet.</p>
+    <p v-if="messages === null" class="no-messages" ref="messages">There are no messages on this match chatroom yet.
+    </p>
     <div v-else class="chat-messages" ref="messages">
       <div
         v-for="(message, index) in latestMessages"
         :key="index"
         :class="{ 'message' : true, 'sameauthor': checkEmail(message.email) }"
       >
-        <p class="msg-author">{{ message.author }} on {{ message.timestamp}}:</p>
+        <p class="msg-author">
+          {{ message.author }} on {{ message.timestamp }}:
+        </p>
         <p>{{ message.message }}</p>
       </div>
     </div>
@@ -92,8 +91,6 @@ export default {
 }
 .chat-messages {
   border: 1px solid #9e9d9d;
-  /*   height: 150px;
-  overflow: scroll; */
 }
 .message {
   border: 1px solid #e0e0e0;

@@ -83,7 +83,8 @@
 </template>
 
 <script>
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/Loader.vue";
+
 export default {
   components: { Loader },
   computed: {
@@ -98,7 +99,7 @@ export default {
       return matches.filter(match => {
         var team =
           match.home_team === this.team.id || match.away_team === this.team.id;
-        var upcoming = match.match_id > 5;
+        var upcoming = Date.parse(match.match_date) > Date.parse(new Date());
         return team && upcoming;
       });
     },
@@ -196,8 +197,7 @@ a.upcoming-games {
 @media only screen and (orientation: landscape) {
   .teaminfo {
     width: 65%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
   }
 }
 </style>

@@ -9,7 +9,7 @@
         class="matchcard"
       ></matchcard>
     </v-layout>
-    <v-layout column v-if="path.includes('results')  && this.$store.state.dataReady">
+    <v-layout column v-if="path.includes('results') && this.$store.state.dataReady">
       <matchcard       
         v-for="match in pastMatches"
         :key="match.name"
@@ -22,7 +22,7 @@
 
 <script>
 import Matchcard from "@/components/Matchcard.vue";
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/Loader.vue";
 
 export default {
   components: { Matchcard, Loader },
@@ -34,10 +34,11 @@ export default {
       return this.$store.state.wsldata.teams;
     },
     pastMatches() {
-      return this.matches.filter(match => match.match_id < 6);
+      return this.matches.filter(match => Date.parse(match.match_date) < Date.parse(new Date())
+);
     },
     upcomingMatches() {
-      return this.matches.filter(match => match.match_id > 5);
+      return this.matches.filter(match => Date.parse(match.match_date) > Date.parse(new Date()));
     },
     path() {
       return this.$route.path;
@@ -56,8 +57,7 @@ export default {
 @media only screen and (orientation: landscape) {
   .matchcard {
     width: 65%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 20px auto;
   }
 }
 </style>

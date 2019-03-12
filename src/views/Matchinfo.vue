@@ -25,37 +25,18 @@
                   <div class="cardtitle">Date</div>
                   <div>{{ match.match_date }} at {{ match.kick_off }}</div>
                 </div>
-                <div v-if="match.match_id > 5">
+                <!-- <div v-if="match.match_id > 5"> -->
+                  <div v-if="Date.parse(match.match_date) > Date.parse(new Date())">
                   <div class="cardtitle">Location</div>
                   <span>{{ homeTeam.stadium.name }} in {{ homeTeam.stadium.town }}</span>
                   <iframe class="map" :src="homeTeam.stadium.map" frameborder="0" allowfullscreen></iframe>
                 </div>
-                <div v-if="match.match_id <= 5">
-                  <div class="cardtitle">Goal scorers</div>
-                  <div class="lineups">
-                    <div class="lineup" v-show="match.home_score !== 0">
-                      <h4>{{ homeTeam.fullname }}</h4>
-                      <p v-for="(player, index) in getGoalScorers(homeTeam)" :key="index">
-                        <v-icon light>mdi-soccer</v-icon>
-                        {{ player }}
-                      </p>
-                    </div>
-                    <div class="lineup" v-show="match.away_score !== 0">
-                      <h4>{{ awayTeam.fullname }}</h4>
-                      <p v-for="(player, index) in getGoalScorers(awayTeam)" :key="index">
-                        <v-icon light>mdi-soccer</v-icon>
-                        {{ player }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
 
-                <div v-show="match.match_id <= 5">
-                  <lineups></lineups>
-                </div>
+                <lineups v-if="Date.parse(match.match_date) < Date.parse(new Date())"></lineups>
+
                 <div class="cardtitle">Match chatroom</div>
-
                 <matchchat></matchchat>
+
               </v-card-text>
             </v-card>
           </v-flex>
@@ -66,25 +47,11 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import Matchchat from "@/components/Matchchat.vue";
 import Loader from "@/components/Loader.vue";
 import Lineups from "@/components/Lineups.vue";
 
 export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-      displayName: "",
-      message: "",
-      showLogIn: false,
-      showSignUp: false,
-      showSend: false,
-      showButtons: false,
-      messages: []
-    };
-  },
   components: { Matchchat, Loader, Lineups },
   computed: {
     match() {
@@ -107,28 +74,11 @@ export default {
       );
     },
     separator() {
-      if (this.match.match_id > 5) {
+      if (Date.parse(this.match.match_date) > Date.parse(new Date())) {
         return "-";
       } else {
         return this.match.home_score + " - " + this.match.away_score;
       }
-    }
-  },
-  methods: {
-    getGoalScorers(team) {
-      var goalScorers = [];
-      var goals;
-      if (team === this.homeTeam) {
-        goals = this.match.home_score;
-      } else {
-        goals = this.match.away_score;
-      }
-      for (var i = 0; i < goals; i++) {
-        var randomPlayer =
-          team.players[Math.floor(Math.random() * team.players.length)];
-        goalScorers.push(randomPlayer);
-      }
-      return goalScorers;
     }
   },
   created() {
