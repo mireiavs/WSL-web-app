@@ -24,7 +24,6 @@
       <span>About</span>
       <v-icon>mdi-information</v-icon>
     </v-btn>
-
   </v-bottom-nav>
 </template>
 
@@ -33,5 +32,4 @@ export default {};
 </script>
 
 <style>
-
 </style>

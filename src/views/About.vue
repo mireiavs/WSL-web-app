@@ -8,23 +8,21 @@
           <a href="http://www.fawsl.com/">official website</a>.
         </p>
       </div>
-      
-        <div class="icons contact">
-          <h3>Contact us </h3>
-          <p>Tap the envelope to send us an email:</p>
-          <v-flex>
-            <a href="mailto:contact@wsl.com">
-              <v-icon size="100px" center>mdi-email-outline</v-icon>
-            </a>
-          </v-flex>
-          <p>You can also call us by tapping the phone icon:</p>
-          <v-flex>
-            <a href="#">
-              <v-icon size="100px" center>mdi-phone</v-icon>
-            </a>
-          </v-flex>
-        </div>
-      
+      <div class="icons contact">
+        <h3>Contact us</h3>
+        <p>Tap the envelope to send us an email:</p>
+        <v-flex>
+          <a href="mailto:contact@wsl.com">
+            <v-icon size="100px" center>mdi-email-outline</v-icon>
+          </a>
+        </v-flex>
+        <p>You can also call us by tapping the phone icon:</p>
+        <v-flex>
+          <a href="#">
+            <v-icon size="100px" center>mdi-phone</v-icon>
+          </a>
+        </v-flex>
+      </div>      
     </v-card>
   </v-layout>
 </template>
@@ -54,12 +52,12 @@ export default {
   text-decoration: none;
 }
 .contact p {
-   margin: 20px 0 0 0;
+  margin: 20px 0 0 0;
 }
 @media only screen and (orientation: landscape) {
   .about-contact {
     width: 65%;
-    margin: auto
+    margin: auto;
   }
 }
 </style>

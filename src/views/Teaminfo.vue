@@ -99,7 +99,8 @@ export default {
       return matches.filter(match => {
         var team =
           match.home_team === this.team.id || match.away_team === this.team.id;
-        var upcoming = Date.parse(match.match_date) > Date.parse(new Date());
+/*         var upcoming = Date.parse(match.match_date) > Date.parse(new Date());
+ */        var upcoming = match.match_id > 5;
         return team && upcoming;
       });
     },

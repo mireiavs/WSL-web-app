@@ -11,10 +11,7 @@
       </div>
 
       <div v-else>
-        <p
-          class="chat-welcome no-login"
-        >You need to be logged in to see the chatrooms. Please log in or sign up below:</p>
-
+        <p class="chat-welcome no-login">You need to be logged in to see the chatrooms. Please log in or sign up below:</p>
         <div>
           <div v-show="!checkAuth() || showButtons">
             <div class="buttons">

@@ -34,11 +34,13 @@ export default {
       return this.$store.state.wsldata.teams;
     },
     pastMatches() {
-      return this.matches.filter(match => Date.parse(match.match_date) < Date.parse(new Date())
-);
+      /* return this.matches.filter(match => Date.parse(match.match_date) < Date.parse(new Date()) */
+      return this.matches.filter(match => match.match_id < 6)
+
     },
     upcomingMatches() {
-      return this.matches.filter(match => Date.parse(match.match_date) > Date.parse(new Date()));
+      /* return this.matches.filter(match => Date.parse(match.match_date) > Date.parse(new Date())); */
+      return this.matches.filter(match => match.match_id > 5);
     },
     path() {
       return this.$route.path;

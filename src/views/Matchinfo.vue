@@ -25,14 +25,16 @@
                   <div class="cardtitle">Date</div>
                   <div>{{ match.match_date }} at {{ match.kick_off }}</div>
                 </div>
-                <!-- <div v-if="match.match_id > 5"> -->
-                  <div v-if="Date.parse(match.match_date) > Date.parse(new Date())">
+                <div v-if="match.match_id > 5">
+                  <!-- <div v-if="Date.parse(match.match_date) > Date.parse(new Date())"> -->
                   <div class="cardtitle">Location</div>
                   <span>{{ homeTeam.stadium.name }} in {{ homeTeam.stadium.town }}</span>
                   <iframe class="map" :src="homeTeam.stadium.map" frameborder="0" allowfullscreen></iframe>
                 </div>
 
-                <lineups v-if="Date.parse(match.match_date) < Date.parse(new Date())"></lineups>
+
+                <lineups v-if="match.match_id < 5"></lineups>
+                <!-- <lineups v-if="Date.parse(match.match_date) < Date.parse(new Date())"></lineups> -->
 
                 <div class="cardtitle">Match chatroom</div>
                 <matchchat></matchchat>
@@ -74,7 +76,8 @@ export default {
       );
     },
     separator() {
-      if (Date.parse(this.match.match_date) > Date.parse(new Date())) {
+/*       if (Date.parse(this.match.match_date) > Date.parse(new Date())) { */
+      if (this.match.match_id > 5) {
         return "-";
       } else {
         return this.match.home_score + " - " + this.match.away_score;
